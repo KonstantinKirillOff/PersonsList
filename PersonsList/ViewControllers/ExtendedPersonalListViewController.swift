@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AllContactInfoViewController: UITableViewController {
+class ExtendedPersonalListViewController: UITableViewController {
     
     var personsData: [Person]!
 
@@ -29,13 +29,23 @@ class AllContactInfoViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "extendedInformationalCell", for: indexPath)
 
         var content = cell.defaultContentConfiguration()
-        let personData = personsData[indexPath.row]
+        let personData = personsData[indexPath.section]
         
-        content.text = personData.phone
-        
+        switch indexPath.row {
+        case 0:
+            content.text = personData.email
+            content.image = UIImage(systemName: "mail" )
+        default:
+            content.text = personData.phone
+            content.image = UIImage(systemName: "phone")
+        }
+    
         cell.contentConfiguration = content
         return cell
-
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }
